@@ -1,4 +1,4 @@
-package restapi.clinicavoll.controller;
+package restapi.clinicavoll.controllers;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import restapi.clinicavoll.models.doctor.dto.DoctorDTO;
 import restapi.clinicavoll.models.doctor.entity.DoctorEntity;
-import restapi.clinicavoll.repository.DoctorRepository;
+import restapi.clinicavoll.repositories.DoctorRepository;
 
 @RestController
 @RequestMapping("/doctor")

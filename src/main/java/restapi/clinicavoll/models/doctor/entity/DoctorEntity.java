@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import restapi.clinicavoll.models.address.AddressEntity;
 import restapi.clinicavoll.models.doctor.dto.SpecialtyDoctorDTO;
 import restapi.clinicavoll.models.doctor.dto.DoctorDTO;
 
@@ -22,6 +23,7 @@ public class DoctorEntity {
 
     private String name;
     private String email;
+    private String phoneNumber;
     private String document;
 
     @Enumerated(EnumType.STRING)
@@ -29,14 +31,15 @@ public class DoctorEntity {
     private SpecialtyDoctorDTO specialtyDoctorDTO;
 
     @Embedded // Esta anotacion indica que este atributo esta incluido dentro de la misma entidad y no como una tabla diferente.
-    @Column(name = "address")
+    @Column(name = "addressDTO")
     private AddressEntity addressEntity;
 
     public DoctorEntity(DoctorDTO doctorDTO) {
         this.name = doctorDTO.name();
         this.email = doctorDTO.email();
+        this.phoneNumber = doctorDTO.phoneNumber();
         this.document = doctorDTO.document();
-        this.specialtyDoctorDTO = doctorDTO.specialty();
-        this.addressEntity = new AddressEntity(doctorDTO.address());
+        this.specialtyDoctorDTO = doctorDTO.specialtyDTO();
+        this.addressEntity = new AddressEntity(doctorDTO.addressDTO());
     }
 }

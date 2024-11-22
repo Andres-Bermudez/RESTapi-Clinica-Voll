@@ -1,4 +1,4 @@
-package restapi.clinicavoll.repository;
+package restapi.clinicavoll.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import restapi.clinicavoll.models.doctor.entity.DoctorEntity;

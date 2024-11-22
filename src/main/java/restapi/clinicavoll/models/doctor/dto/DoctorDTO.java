@@ -1,10 +1,12 @@
 package restapi.clinicavoll.models.doctor.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import restapi.clinicavoll.models.AddressDTO;
+import restapi.clinicavoll.models.address.AddressDTO;
 
 public record DoctorDTO(
 
@@ -16,14 +18,21 @@ public record DoctorDTO(
     String email,
 
     @NotBlank
+    @Pattern(regexp = "\\d{10}")
+    @JsonProperty("phone number")
+    String phoneNumber,
+
+    @NotBlank
     // La anotación @Pattern se utiliza para validar cadenas (Strings) en base a una expresión regular.
     @Pattern(regexp = "\\d{6,10}") // Expresion regular para validar que llegue una cadena de 6 a 10 dígitos.
     String document,
 
     @NotNull
-    SpecialtyDoctorDTO specialty,
+    SpecialtyDoctorDTO specialtyDTO,
 
     @NotNull // Esta anotacion valida que este objeto no llegue null.
-    AddressDTO address
+    @Valid
+    @JsonProperty("address")
+    AddressDTO addressDTO
 ) {
 }

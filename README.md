@@ -23,3 +23,12 @@ la solicitud en un parámetro en el Controller;
    
 9. Use el patrón de diseño DTO (Data Transfer Object), a través de Java
 Records, para representar los datos recibidos en una solicitud POST.
+
+10. Agregar nuevas dependencias en el proyecto;
+
+11. Asignar una entidad JPA y crear una interfaz de Repositorio para ella;
+
+12. Utilizar Flyway como herramienta de migración de proyectos;
+
+13. Realice validaciones con Bean Validation usando algunas de sus 
+anotaciones, como @NotBlank.

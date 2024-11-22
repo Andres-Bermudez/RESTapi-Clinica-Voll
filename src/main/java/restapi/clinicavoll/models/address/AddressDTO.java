@@ -1,4 +1,4 @@
-package restapi.clinicavoll.models;
+package restapi.clinicavoll.models.address;
 
 import jakarta.validation.constraints.NotBlank;
 

@@ -1,10 +1,9 @@
-package restapi.clinicavoll.models.doctor.entity;
+package restapi.clinicavoll.models.address;
 
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import restapi.clinicavoll.models.AddressDTO;
 
 @Embeddable
 @Getter
