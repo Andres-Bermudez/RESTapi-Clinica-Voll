@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Personalize ###
-.src.main.resources.aplication.properties
+src/main/resources/application.properties
