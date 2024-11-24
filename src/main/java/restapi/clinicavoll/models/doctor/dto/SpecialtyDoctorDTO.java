@@ -5,5 +5,7 @@ public enum SpecialtyDoctorDTO {
     ORTHOPEDICS,
     CARDIOLOGY,
     GINECOLOGY,
-    PEDIATRICS
+    PEDIATRICS,
+    NEUROLOGY,
+    DERMATOLOGY
 }

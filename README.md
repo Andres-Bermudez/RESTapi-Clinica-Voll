@@ -32,3 +32,13 @@ Records, para representar los datos recibidos en una solicitud POST.
 
 13. Realice validaciones con Bean Validation usando algunas de sus 
 anotaciones, como @NotBlank.
+
+14. Usar la anotación @GetMapping para mapear métodos en los Controllers
+que producen datos;
+
+15. Usar la interfaz Pageable de Spring para realizar consultas con paginación;
+
+16. Controlar la paginación y el ordenamiento de los datos devueltos por la API 
+con los parámetros page, size y sort;
+
+17. Configurar el proyecto para que los comandos SQL se visualicen en la consola.

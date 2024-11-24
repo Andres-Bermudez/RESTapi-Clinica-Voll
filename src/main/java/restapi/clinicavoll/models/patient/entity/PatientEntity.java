@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import restapi.clinicavoll.models.address.AddressEntity;
-import restapi.clinicavoll.models.patient.dto.PatientDTO;
+import restapi.clinicavoll.models.patient.dto.PatientReceiveDTO;
 
 @Entity
 @Table(name = "patients")
@@ -26,14 +26,14 @@ public class PatientEntity {
     private String document;
 
     @Embedded // Esta anotacion indica que este atributo esta incluido dentro de la misma entidad y no como una tabla diferente.
-    @Column(name = "addressDTO")
+    @Column(name = "address")
     private AddressEntity addressEntity;
 
-    public PatientEntity(PatientDTO patientDTO) {
-        this.name = patientDTO.name();
-        this.email = patientDTO.email();
-        this.phoneNumber = patientDTO.phoneNumber();
-        this.document = patientDTO.document();
-        this.addressEntity = new AddressEntity(patientDTO.addressDTO());
+    public PatientEntity(PatientReceiveDTO patientReceiveDTO) {
+        this.name = patientReceiveDTO.name();
+        this.email = patientReceiveDTO.email();
+        this.phoneNumber = patientReceiveDTO.phoneNumber();
+        this.document = patientReceiveDTO.document();
+        this.addressEntity = new AddressEntity(patientReceiveDTO.addressDTO());
     }
 }

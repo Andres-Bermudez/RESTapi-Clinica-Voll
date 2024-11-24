@@ -6,8 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import restapi.clinicavoll.models.address.AddressEntity;
+import restapi.clinicavoll.models.doctor.dto.DoctorReceiveDTO;
 import restapi.clinicavoll.models.doctor.dto.SpecialtyDoctorDTO;
-import restapi.clinicavoll.models.doctor.dto.DoctorDTO;
 
 @Table(name = "doctors")
 @Entity()
@@ -34,12 +34,12 @@ public class DoctorEntity {
     @Column(name = "addressDTO")
     private AddressEntity addressEntity;
 
-    public DoctorEntity(DoctorDTO doctorDTO) {
-        this.name = doctorDTO.name();
-        this.email = doctorDTO.email();
-        this.phoneNumber = doctorDTO.phoneNumber();
-        this.document = doctorDTO.document();
-        this.specialtyDoctorDTO = doctorDTO.specialtyDTO();
-        this.addressEntity = new AddressEntity(doctorDTO.addressDTO());
+    public DoctorEntity(DoctorReceiveDTO doctorReceiveDTO) {
+        this.name = doctorReceiveDTO.name();
+        this.email = doctorReceiveDTO.email();
+        this.phoneNumber = doctorReceiveDTO.phoneNumber();
+        this.document = doctorReceiveDTO.document();
+        this.specialtyDoctorDTO = doctorReceiveDTO.specialtyDTO();
+        this.addressEntity = new AddressEntity(doctorReceiveDTO.addressDTO());
     }
 }

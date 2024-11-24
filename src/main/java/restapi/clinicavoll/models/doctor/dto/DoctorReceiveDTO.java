@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import restapi.clinicavoll.models.address.AddressDTO;
 
-public record DoctorDTO(
+public record DoctorReceiveDTO(
 
     @NotBlank // Esta anotacion verifica que el atributo no llegue en blanco o null.
     String name,
@@ -28,6 +28,7 @@ public record DoctorDTO(
     String document,
 
     @NotNull
+    @JsonProperty("specialty")
     SpecialtyDoctorDTO specialtyDTO,
 
     @NotNull // Esta anotacion valida que este objeto no llegue null.
