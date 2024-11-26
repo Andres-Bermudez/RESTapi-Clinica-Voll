@@ -16,10 +16,20 @@ public class AddressEntity {
     private String district;
     private String number;
 
+    // Constructor
     public AddressEntity(AddressDTO addressDTO) {
         this.country = addressDTO.country();
         this.city = addressDTO.city();
         this.district = addressDTO.district();
         this.number = addressDTO.number();
+    }
+
+    // Metodo Comun
+    public AddressEntity updatedData(AddressDTO addressDTO) {
+        this.country = addressDTO.country();
+        this.city = addressDTO.city();
+        this.district = addressDTO.district();
+        this.number = addressDTO.number();
+        return this;
     }
 }

@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import restapi.clinicavoll.models.address.AddressDTO;
 
-public record DoctorReceiveDTO(
+public record DoctorCreateDTO(
 
     @NotBlank // Esta anotacion verifica que el atributo no llegue en blanco o null.
     String name,

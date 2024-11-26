@@ -6,7 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import restapi.clinicavoll.models.address.AddressEntity;
-import restapi.clinicavoll.models.patient.dto.PatientReceiveDTO;
+import restapi.clinicavoll.models.patient.dto.PatientCreateDTO;
+import restapi.clinicavoll.models.patient.dto.PatientUpdateDTO;
 
 @Entity
 @Table(name = "patients")
@@ -29,11 +30,40 @@ public class PatientEntity {
     @Column(name = "address")
     private AddressEntity addressEntity;
 
-    public PatientEntity(PatientReceiveDTO patientReceiveDTO) {
-        this.name = patientReceiveDTO.name();
-        this.email = patientReceiveDTO.email();
-        this.phoneNumber = patientReceiveDTO.phoneNumber();
-        this.document = patientReceiveDTO.document();
-        this.addressEntity = new AddressEntity(patientReceiveDTO.addressDTO());
+    // Este atributo es para indicar si el estado del medico es activo o inactivo.
+    // Las operaciones de Delete en la base de datos no eliminan el registro, sino que mofifican el
+    // el estado de este atributo a false.
+    private Boolean activeStatus;
+
+    public PatientEntity(PatientCreateDTO patientCreateDTO) {
+        this.name = patientCreateDTO.name();
+        this.email = patientCreateDTO.email();
+        this.phoneNumber = patientCreateDTO.phoneNumber();
+        this.document = patientCreateDTO.document();
+        this.addressEntity = new AddressEntity(patientCreateDTO.addressDTO());
+        this.activeStatus = true;
+    }
+
+    public void updateData(PatientUpdateDTO patientUpdateEntity) {
+        // Para verificar si alguno de los campos no necesita actualziarce.
+        if (patientUpdateEntity.name() != null) {
+            this.name = patientUpdateEntity.name();
+        }
+        if (patientUpdateEntity.email() != null) {
+            this.email = patientUpdateEntity.email();
+        }
+        if (patientUpdateEntity.phoneNumber() != null) {
+            this.phoneNumber = patientUpdateEntity.phoneNumber();
+        }
+        if (patientUpdateEntity.document() != null) {
+            this.document = patientUpdateEntity.document();
+        }
+        if (patientUpdateEntity.addressDTO() != null) {
+            this.addressEntity = addressEntity.updatedData(patientUpdateEntity.addressDTO());
+        }
+    }
+
+    public void deactivatePatient() {
+        this.activeStatus = false;
     }
 }

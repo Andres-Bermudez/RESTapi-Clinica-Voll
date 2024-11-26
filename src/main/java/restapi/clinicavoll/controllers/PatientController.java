@@ -7,8 +7,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
-import restapi.clinicavoll.models.patient.dto.PatientExposedDTO;
-import restapi.clinicavoll.models.patient.dto.PatientReceiveDTO;
+import restapi.clinicavoll.models.patient.dto.PatientListDTO;
+import restapi.clinicavoll.models.patient.dto.PatientCreateDTO;
+import restapi.clinicavoll.models.patient.dto.PatientUpdateDTO;
 import restapi.clinicavoll.services.PatientService;
 
 @RestController
@@ -20,7 +21,7 @@ public class PatientController {
 
     // Obtener la lista de pacientes registrados en la base de datos.
     @GetMapping("/list")
-    public Page<PatientExposedDTO> doctorList(
+    public Page<PatientListDTO> doctorList(
 
             //Aplicando paginacion automatica con Spring.
             // Enviando los Querys params por defecto.
@@ -37,8 +38,22 @@ public class PatientController {
     public void patientRegistration(
             @RequestBody
             @Valid
-            PatientReceiveDTO patientReceiveDTO
+            PatientCreateDTO patientCreateDTO
     ) {
-        patientService.savePatient(patientReceiveDTO);
+        patientService.savePatient(patientCreateDTO);
+    }
+
+    // Para actualizar datos de un medico en la base de datos.
+    @PutMapping("/modify")
+    public void patientUpdateData(@RequestBody
+                                 @Valid
+                                  PatientUpdateDTO patientUpdateDTO) {
+        patientService.updatePatientData(patientUpdateDTO);
+    }
+
+    // Para eliminar un medico de la base de datos.
+    @DeleteMapping("/delete/{patient_id}")
+    public void deletePatient(@PathVariable Long patient_id) {
+        patientService.deletePatient(patient_id);
     }
 }

@@ -5,7 +5,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import restapi.clinicavoll.models.address.AddressDTO;
 
-public record PatientReceiveDTO(
+public record PatientCreateDTO(
 
         @NotBlank
         String name,
