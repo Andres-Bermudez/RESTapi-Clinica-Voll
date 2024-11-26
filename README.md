@@ -111,3 +111,12 @@ con los parámetros page, size y sort;
 21. Mapear parámetros dinámicos en la URL con la anotación @PathVariable;
 
 22. Implementar el concepto de exclusión lógica utilizando un atributo booleano.
+    
+23. Usar la clase ResponseEntity, de Spring, para personalizar los retornos de los 
+métodos de una clase Controller;
+    
+24. Modificar el código HTTP devuelto en las respuestas de la API;
+    
+25. Agregar encabezados a las respuestas de la API;
+    
+26. Utilice los códigos HTTP más apropiados para cada operación realizada en la API.

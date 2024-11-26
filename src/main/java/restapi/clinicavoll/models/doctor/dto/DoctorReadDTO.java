@@ -5,13 +5,14 @@ import restapi.clinicavoll.models.doctor.entity.DoctorEntity;
 public record DoctorReadDTO(
         Long id,
         String name,
-        String specialty,
+        SpecialtyDoctorDTO specialty,
         String email
 ) {
+
     public DoctorReadDTO(DoctorEntity doctorEntity) {
         this(doctorEntity.getId(),
              doctorEntity.getName(),
-             String.valueOf(SpecialtyDoctorDTO.valueOf(doctorEntity.getSpecialtyDoctorDTO().toString())),
+             doctorEntity.getSpecialtyDoctorDTO(),
              doctorEntity.getEmail());
     }
 }

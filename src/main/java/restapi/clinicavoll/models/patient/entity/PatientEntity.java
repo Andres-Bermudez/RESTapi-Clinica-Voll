@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import restapi.clinicavoll.models.address.AddressEntity;
 import restapi.clinicavoll.models.patient.dto.PatientCreateDTO;
+import restapi.clinicavoll.models.patient.dto.PatientReadDTO;
 import restapi.clinicavoll.models.patient.dto.PatientUpdateDTO;
 
 @Entity
@@ -44,7 +45,7 @@ public class PatientEntity {
         this.activeStatus = true;
     }
 
-    public void updateData(PatientUpdateDTO patientUpdateEntity) {
+    public PatientReadDTO updateData(PatientUpdateDTO patientUpdateEntity) {
         // Para verificar si alguno de los campos no necesita actualziarce.
         if (patientUpdateEntity.name() != null) {
             this.name = patientUpdateEntity.name();
@@ -61,6 +62,7 @@ public class PatientEntity {
         if (patientUpdateEntity.addressDTO() != null) {
             this.addressEntity = addressEntity.updatedData(patientUpdateEntity.addressDTO());
         }
+        return new PatientReadDTO(this);
     }
 
     public void deactivatePatient() {

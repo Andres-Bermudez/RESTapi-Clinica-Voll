@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import restapi.clinicavoll.models.address.AddressEntity;
 import restapi.clinicavoll.models.doctor.dto.DoctorCreateDTO;
+import restapi.clinicavoll.models.doctor.dto.DoctorReadDTO;
 import restapi.clinicavoll.models.doctor.dto.DoctorUpdateDTO;
 import restapi.clinicavoll.models.doctor.dto.SpecialtyDoctorDTO;
 
@@ -50,7 +51,7 @@ public class DoctorEntity {
         this.activeStatus = true;
     }
 
-    public void updatedData(DoctorUpdateDTO doctorUpdateDTO) {
+    public DoctorReadDTO updatedData(DoctorUpdateDTO doctorUpdateDTO) {
 
         // Para verificar si alguno de los campos no necesita actualziarce.
         if (doctorUpdateDTO.name() != null) {
@@ -71,6 +72,8 @@ public class DoctorEntity {
         if (doctorUpdateDTO.addressDTO() != null) {
             this.addressEntity = addressEntity.updatedData(doctorUpdateDTO.addressDTO());
         }
+        // Retorna al cliente el objeto actualizado.
+        return new DoctorReadDTO(this);
     }
 
     public void deactivateDoctor() {
