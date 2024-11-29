@@ -7,9 +7,10 @@
 ![DataBase.png](images/DataBase.png)
 
 ### Descripcion:
-Esta aplicación web está diseñada para una clínica y permite la gestión
+Esta API está diseñada para una clínica y permite la gestión
 integral de médicos, pacientes y consultas, ofreciendo todas las operaciones 
-comunes para la persistencia de datos.
+comunes para la persistencia de datos con autenticacion y autorizacion de usuarios
+utilizando los modulos que nos proporciona Spring framework para gestionar estas tareas.
 
 En este proyecto, utilicé Spring Initializr para crear un proyecto con 
 Spring Boot, aprovechando su configuración automática.
@@ -22,8 +23,7 @@ Gestión de Médicos: Permite agregar, actualizar, listar y eliminar registros d
 <br><br>
 Gestión de Pacientes: Facilita la administración de los datos de los pacientes.
 <br><br>
-Gestión de Consultas: Permite registrar y gestionar las consultas médicas realizadas.
-<br><br>
+
 - Realizando una solitud GET para obtener los medicos registrados:
 ![ListDoctor.png](images/ListDoctor.png)
 
@@ -31,17 +31,22 @@ Los detalles del stack tecnológico son los siguientes:
 
 Lenguaje de Programación: Java
 <br>
+Framework: Spring
+<br>
 Gestor de Dependencias: Maven
 <br>
 Base de Datos: MySQL
 
-Dependencias y Frameworks:
+Dependencias utilizadas:
 
-Spring Data JPA: Facilita el acceso y manipulación de la base de datos.
+Spring Data JPA: Para gestionar el acceso y manipulación de la base de datos.
 <br><br>
 Spring Validation: Para validar los datos de entrada de forma sencilla.
 <br><br>
 Spring Starter Web: Permite la ejecución de aplicaciones web.
+<br><br>
+Spring Security: Para gestionar la autenticacion y autorizacion de usuarios 
+que realizan solicitudes a la API.
 <br><br>
 Devtools: Facilita el desarrollo en tiempo real, mostrando los cambios sin 
 necesidad de reiniciar el servidor.
@@ -52,7 +57,7 @@ getters y setters.
 Flyway: Para realizar migraciones de bases de datos.
 
 Este proyecto demuestra la integración de múltiples componentes de Spring 
-Framework para desarrollar una API REST robusta y eficiente, proporcionando 
+Framework para desarrollar una API REST robusta, eficiente y segura, proporcionando 
 una solución completa para la gestión de una clínica médica.
 <br><br>
 - Estructura del proyecto:
@@ -120,3 +125,25 @@ métodos de una clase Controller;
 25. Agregar encabezados a las respuestas de la API;
     
 26. Utilice los códigos HTTP más apropiados para cada operación realizada en la API.
+
+27. 27.Crear una clase para aislar el manejo de excepciones de API, utilizando la 
+anotación @RestControllerAdvice;
+    
+28. Utilizar la anotación @ExceptionHandler, de Spring, para indicar qué excepción debe 
+capturar un determinado método de la clase de manejo de errores;
+    
+29. Manejar errores 404 (Not Found) en la clase de manejo de errores;
+    
+30. Manejar errores 400 (Bad Request), para errores de validación de Bean Validation, 
+en la clase de manejo de errores;
+    
+31. Simplificar el JSON devuelto por la API en casos de error de validación de Bean Validation.
+
+32. Identificar cómo funciona el proceso de autenticación y autorización en una API Rest;
+
+33. Agregar Spring Security al proyecto;
+
+34. Cómo funciona el comportamiento padrón de Spring Security en una aplicación;
+
+35. Implementar el proceso de autenticación en la API, de forma Stateless, 
+utilizando clases y configuraciones de Spring Security.
