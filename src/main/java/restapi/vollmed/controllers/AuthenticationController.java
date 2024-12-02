@@ -10,13 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import restapi.vollmed.models.jwt.JwtDTO;
+import restapi.vollmed.models.jwt.JWTokenDTO;
 import restapi.vollmed.models.users.AuthenticationUserDTO;
 import restapi.vollmed.models.users.UserEntity;
 import restapi.vollmed.services.security.TokenService;
 
 @Controller
-@RequestMapping("/login") // Endpoint de autenticacion
+@RequestMapping("/login") // Endpoint de autenticacion.
 public class AuthenticationController {
 
     @Autowired
@@ -31,7 +31,7 @@ public class AuthenticationController {
 
     // Este metodo es un controlador HTTP  que maneja solicitudes de autenticación de usuarios.
     @PostMapping
-    public ResponseEntity<JwtDTO> authenticationUser(
+    public ResponseEntity<JWTokenDTO> authenticationUser(
             @RequestBody @Valid
             // Objeto recibido en el cuerpo de la solicitud.
             AuthenticationUserDTO authenticationUserDTO
@@ -47,12 +47,12 @@ public class AuthenticationController {
         // (en este caso, UsernamePasswordAuthenticationToken con las credenciales del usuario)
         // y lo procesa. Si las credenciales son válidas, el usuario se autentica correctamente.
         // Si no, se lanza una excepción (AuthenticationException).
-        var authenticateUser = authenticationManager.authenticate(authToken);
+        Authentication authenticateUser = authenticationManager.authenticate(authToken);
 
         // Generar el JWT.
-        var JWToken = tokenService.generateToken((UserEntity)authenticateUser.getPrincipal()); // getPrincipal() es para obtener el usuario ya autenticado en el sistema.
+        String JWToken = tokenService.generateToken( (UserEntity) authenticateUser.getPrincipal()); // getPrincipal() es para obtener el usuario ya autenticado en el sistema.
 
         // Si la autenticación es exitosa, se devuelve una respuesta HTTP 200 (OK) con el JWT generado.
-        return  ResponseEntity.ok(new JwtDTO(JWToken));
+        return  ResponseEntity.ok(new JWTokenDTO(JWToken));
     }
 }

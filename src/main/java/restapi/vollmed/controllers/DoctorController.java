@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import restapi.vollmed.models.doctor.dto.DoctorCreateDTO;
@@ -73,6 +74,7 @@ public class DoctorController {
     }
 
     // Para actualizar datos de un medico en la base de datos.
+    // @Secured("ROLE_ADMIN") Para permitir que esta solicitud sea ejecutada solo por usuarios con el rol de ADMIN.
     @PutMapping("/modify")
     public ResponseEntity<DoctorReadDTO> doctorUpdateData(
             @RequestBody
@@ -86,6 +88,7 @@ public class DoctorController {
 
     // Para eliminar un medico de la base de datos.
     @DeleteMapping("/delete/{doctor_id}")
+    // @Secured("ROLE_ADMIN") Para permitir que esta solicitud sea ejecutada solo por usuarios con el rol de ADMIN.
     public ResponseEntity<DoctorReadDTO> deleteDoctor(@PathVariable Long doctor_id) {
         doctorService.deleteDoctor(doctor_id);
 

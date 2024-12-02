@@ -1,8 +1,22 @@
 # REST API Clinica Voll
 
+- Proceso de autenticacion en la API:
+  ![authentication.png](images/authentication.png)
+  <br><br>
+
+- Funcionamiento de los filtros para interceptar las solicitudes
+  y verificar si llegan con un token valido:
+  ![servletSpring.png](images/servletSpring.png)
+  <br><br>
+
+- Proceso de autorizacion de usuarios en la API:
+  ![autorization.png](images/autorization.png)
+  <br><br>
+
 - Creacion de una entidad por medio del endpoint correspondiente:
 ![CreateDoctor.png](images/CreateDoctor.png)
-<br><br>
+  <br><br>
+
 - Registros en la base de datos:
 ![DataBase.png](images/DataBase.png)
 
@@ -12,8 +26,8 @@ integral de médicos, pacientes y consultas, ofreciendo todas las operaciones
 comunes para la persistencia de datos con autenticacion y autorizacion de usuarios
 utilizando los modulos que nos proporciona Spring framework para gestionar estas tareas.
 
-En este proyecto, utilicé Spring Initializr para crear un proyecto con 
-Spring Boot, aprovechando su configuración automática.
+En la creacion del proyecto se hace enfasis en las buenas practicas para
+la creacion de APIs REST para garantizar la seguridad, escalabilidad y facil mantenimiento.
 
 La aplicación permite realizar todas las operaciones CRUD (Crear, Leer, 
 Actualizar, Eliminar) necesarias para la gestión de la información en la clínica. 
@@ -21,7 +35,8 @@ Esto incluye:
 
 Gestión de Médicos: Permite agregar, actualizar, listar y eliminar registros de médicos.
 <br><br>
-Gestión de Pacientes: Facilita la administración de los datos de los pacientes.
+Gestión de Pacientes: Facilita la administración de los datos de los pacientes ejecutando 
+las mismas operaciones disponibles con los medicos.
 <br><br>
 
 - Realizando una solitud GET para obtener los medicos registrados:
@@ -147,3 +162,22 @@ en la clase de manejo de errores;
 
 35. Implementar el proceso de autenticación en la API, de forma Stateless, 
 utilizando clases y configuraciones de Spring Security.
+
+36. Agregar la biblioteca Auth0 java-jwt como una dependencia del proyecto;
+    
+37. Utilizar esta biblioteca para generar un token en la API;
+    
+38. Inyectar una propiedad del archivo application.properties en una clase administrada
+por Spring, usando la anotación @Value;
+    
+39. Devolver un token generado en la API cuando un usuario se autentica.
+
+40. Los Filters funcionan en una solicitud;
+    
+41. Implementar un Filter creando una clase que herede de la clase OncePerRequestFilter de Spring;
+    
+42. Utilizar la biblioteca Auth0 java-jwt para validar los tokens recibidos en la API;
+    
+43. Realizar el proceso de autenticación de la solicitud, utilizando la clase SecurityContextHolder de Spring;
+    
+44. Liberar y restringir solicitudes, según la URL y el verbo del protocolo HTTP.

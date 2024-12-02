@@ -73,6 +73,7 @@ public class PatientController {
 
     // Para actualizar datos de un medico en la base de datos.
     @PutMapping("/modify")
+    // @Secured("ROLE_ADMIN") Para permitir que esta solicitud sea ejecutada solo por usuarios con el rol de ADMIN.
     public ResponseEntity<PatientReadDTO> patientUpdateData(
             @RequestBody
             @Valid
@@ -85,6 +86,7 @@ public class PatientController {
 
     // Para eliminar un medico de la base de datos.
     @DeleteMapping("/delete/{patient_id}")
+    // @Secured("ROLE_ADMIN") Para permitir que esta solicitud sea ejecutada solo por usuarios con el rol de ADMIN.
     public ResponseEntity<PatientReadDTO> deletePatient(@PathVariable Long patient_id) {
         patientService.deletePatient(patient_id);
 
