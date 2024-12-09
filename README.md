@@ -181,3 +181,16 @@ por Spring, usando la anotación @Value;
 43. Realizar el proceso de autenticación de la solicitud, utilizando la clase SecurityContextHolder de Spring;
     
 44. Liberar y restringir solicitudes, según la URL y el verbo del protocolo HTTP.
+
+45. Implementar una nueva funcionalidad en el proyecto;
+    
+46. Evaluar cuándo es necesario crear una clase Service en la aplicación;
+    
+47. Crear una clase Service, con el objetivo de aislar códigos de reglas de negocio, utilizando la anotación @Service;
+    
+48. Implementar un algoritmo para la funcionalidad de reserva de consultas;
+    
+49. Realizar validaciones de integridad de las informaciones que llegan a la API;
+    
+50. Implementar una consulta JPQL (Java Persistence Query Language) compleja en una interfaz repository, 
+utilizando para eso la anotación @Query.
