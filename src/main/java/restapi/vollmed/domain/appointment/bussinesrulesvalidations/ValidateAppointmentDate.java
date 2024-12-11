@@ -1,11 +1,11 @@
 package restapi.vollmed.domain.appointment.bussinesrulesvalidations;
 
-import jakarta.validation.ValidationException;
 import org.springframework.stereotype.Component;
 import restapi.vollmed.domain.appointment.AppointmentDTO;
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import restapi.vollmed.exceptions.ValidationException;
 
 @Component
 public class ValidateAppointmentDate implements AppointmentsValidator {

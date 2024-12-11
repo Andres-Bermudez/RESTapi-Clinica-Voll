@@ -1,6 +1,6 @@
 package restapi.vollmed.domain.appointment.bussinesrulesvalidations;
 
-import jakarta.validation.ValidationException;
+import restapi.vollmed.exceptions.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import restapi.vollmed.domain.appointment.AppointmentDTO;

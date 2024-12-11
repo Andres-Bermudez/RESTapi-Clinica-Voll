@@ -12,7 +12,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import restapi.vollmed.domain.user.UserRepository;
-
 import java.io.IOException;
 
 // Esta clase es para interceptar las Requests y verificar si llegan
