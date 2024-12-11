@@ -2,11 +2,13 @@ package restapi.vollmed.domain.appointment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentsValidator;
 import restapi.vollmed.domain.doctor.DoctorEntity;
 import restapi.vollmed.domain.doctor.DoctorRepository;
 import restapi.vollmed.exceptions.ValidationException;
 import restapi.vollmed.domain.patient.PatientEntity;
 import restapi.vollmed.domain.patient.PatientRepository;
+import java.util.List;
 
 @Service
 public class AppointmentService {
@@ -19,6 +21,13 @@ public class AppointmentService {
 
     @Autowired
     private AppointmentRepository appointmentRepository;
+
+    // PATRON DE DISENO STRATEGY.
+    // Inyectamos todas las clases que nos sirven para validar las reglas de negocio.
+    // Spring reconoce que AppointmentsValidator es una interfaz y busca todas las
+    // clases que la implementan y las inyecta en esta lista.
+    @Autowired
+    private List<AppointmentsValidator> validators;
 
     // Metodo para agendar una cita en la base de datos.
     protected void scheduleAppointment(AppointmentDTO appointmentDTO) {
@@ -38,13 +47,11 @@ public class AppointmentService {
         DoctorEntity doctorEntity = assignDoctor(appointmentDTO); // Para asignar un medico a la cita.
         PatientEntity patientEntity = patientRepository.findById(appointmentDTO.idPatient()).get();
 
-        // Para verificar que la fecha enviada en la solicitud sea valida y este
-        // dentro de nuestras reglas de negocio(Lunes-Sabado, 07:00-19:00).
-
-
-        // Asignar la cita con una duracion de una hora a partir de la fecha enviada en
-        // la solicitud.
-
+        // Validaciones de las reglas de negocio.
+        // De esta forma ejecutamos cada una de las validaciones que requiere nuestro modelo
+        // de negocio y hacemos que el codigo sea mas legible, escalable y mantenible,
+        // utilizando principios SOLID.
+        validators.forEach(validator -> validator.validate(appointmentDTO));
 
         // Para almacenar una nueva cita en la base de datos.
         AppointmentEntity appointmentEntity
@@ -81,9 +88,9 @@ public class AppointmentService {
     }
 
     // Este metodo es para cancelar una cita.
-    public void cancelledAppointment(CancelledAppointmentDTO cancelledAppointmentDTO) {
+    protected void cancelledAppointment(CancelledAppointmentDTO cancelledAppointmentDTO) {
 
-        // Para verificar si la cita que se quiere cancelar exite en la base de datos.
+        // Para verificar si la cita que se quiere cancelar existe en la base de datos.
         if (!appointmentRepository.existsById(cancelledAppointmentDTO.idAppointment())) {
             throw new ValidationException("Query id reported does not exist.");
         }

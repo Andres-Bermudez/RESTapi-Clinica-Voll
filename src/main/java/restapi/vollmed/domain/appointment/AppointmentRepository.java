@@ -6,4 +6,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AppointmentRepository extends JpaRepository<AppointmentEntity, Long> {
 
+    boolean existsByPatientId(Long id);
+    boolean existsByDoctorId(Long id);
+
+    AppointmentEntity findFirstByPatientIdOrderByDateDesc(Long patientId);
+    AppointmentEntity findFirstByDoctorIdOrderByDateDesc(Long patientId);
 }

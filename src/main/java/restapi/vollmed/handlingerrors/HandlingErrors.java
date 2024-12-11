@@ -1,11 +1,13 @@
 package restapi.vollmed.handlingerrors;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import restapi.vollmed.exceptions.ValidationException;
 import java.util.List;
 
 /*
@@ -41,6 +43,12 @@ public class HandlingErrors {
         // Este metodo retorna un error 404 NOT FOUND, en caso de que
         // detecte que se lanza una EntityNotFoundException.
         return ResponseEntity.badRequest().body(fieldError);
+    }
+
+    // Maneja ValidationException y retorna un 400 Bad Request.
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<Object> handleValidationException(ValidationException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
     // Este es el tipo de objeto al que mapeamos el error obtenido para que
