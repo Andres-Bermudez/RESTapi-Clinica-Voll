@@ -4,9 +4,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
@@ -20,17 +20,15 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
     @Query(value = """
        SELECT d.*
        FROM doctors d
-       WHERE d.active_status = 1
+       WHERE d.active_status = true
        AND d.specialty = :specialtyDoctor
        AND d.id NOT IN (
-            SELECT a.doctor_id
+            SELECT a.id_doctor
             FROM appointments a
             WHERE a.date = :date
        )
        ORDER BY RAND()
        LIMIT 1
        """, nativeQuery = true)
-    DoctorEntity assignRandomDoctorSpecialtyAvailableIndicatedDate(
-            @Param("specialtyDoctor") SpecialtyDoctor specialtyDoctor,
-            @Param("date") LocalDateTime date);
+    Optional<DoctorEntity> assignRandomDoctor(String specialtyDoctor, LocalDateTime date);
 }

@@ -13,18 +13,18 @@ public class ValidateAppointmentDate implements AppointmentsValidator {
     // Metodo para verificar que la fecha enviada en la solicitud sea valida y este
     // dentro de nuestras reglas de negocio(Lunes-Sabado, 07:00-19:00).
     @Override
-    public void validate(AppointmentDTO appointmentDTO) {
+    public void validate(AppointmentValidateDTO appointmentValidateDTO) {
 
         // Si la fecha que solicito el usuario es un dia domingo, esta variable sera true.
-        Boolean sunday = appointmentDTO.date().getDayOfWeek().equals(DayOfWeek.SUNDAY);
+        Boolean sunday = appointmentValidateDTO.date().getDayOfWeek().equals(DayOfWeek.SUNDAY);
 
         // Si la hora solicitada por el usuario es antes de las 07:00, horario de apertura
         // de la clinica esta variable sera true.
-        Boolean beforeOpeningHours = appointmentDTO.date().getHour() < 7;
+        Boolean beforeOpeningHours = appointmentValidateDTO.date().getHour() < 7;
 
         // Si la hora solicitada por el usuario es despues de las 19:00, horario de cierre
         // de la clinica esta variable sera true.
-        Boolean afterClosingTime = appointmentDTO.date().getHour() > 18;
+        Boolean afterClosingTime = appointmentValidateDTO.date().getHour() > 18;
 
         // Si alguna de las varibles anteriormente declaradas llega a ser true sera lanzada
         // una excepcion porque la fecha solicitada no es valida dentro del horario de servicio.

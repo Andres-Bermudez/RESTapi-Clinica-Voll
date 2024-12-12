@@ -3,7 +3,6 @@ package restapi.vollmed.domain.appointment.bussinesrulesvalidations;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import restapi.vollmed.domain.appointment.AppointmentDTO;
 import restapi.vollmed.domain.patient.PatientEntity;
 import restapi.vollmed.domain.patient.PatientRepository;
 import restapi.vollmed.exceptions.ValidationException;
@@ -16,9 +15,9 @@ public class ValidateActivePatientStatus implements AppointmentsValidator {
 
     // Para validar si el paciente que solicita una cita esta activo en el sistema.
     @Override
-    public void validate(AppointmentDTO appointmentDTO) {
+    public void validate(AppointmentValidateDTO appointmentValidateDTO) {
 
-        PatientEntity patient = patientRepository.getReferenceById(appointmentDTO.idPatient());
+        PatientEntity patient = patientRepository.getReferenceById(appointmentValidateDTO.idPatient());
 
         // Si el paciente esta inactivo en el sistema se lanzara una excepcion.
         if (!patient.getActiveStatus()) {

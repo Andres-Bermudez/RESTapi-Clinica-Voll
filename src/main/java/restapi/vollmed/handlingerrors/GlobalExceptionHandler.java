@@ -24,6 +24,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAllExceptions(Exception e) {
         e.printStackTrace();
+        e.getMessage();
         // Retornar un 500 Internal Server Error para todas las excepciones no manejadas.
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
     }

@@ -1,10 +1,10 @@
 package restapi.vollmed.domain.appointment;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/appointment")
@@ -22,8 +22,8 @@ public class AppointmentController {
             AppointmentDTO appointmentDTO
     ) {
         // Para agendar una cita en la base de datos.
-        appointmentService.scheduleAppointment(appointmentDTO);
-        return ResponseEntity.ok().body(new AppointmentDetailsDTO(appointmentDTO));
+        AppointmentDetailsDTO appointmentDetails = appointmentService.scheduleAppointment(appointmentDTO);
+        return ResponseEntity.ok(appointmentDetails);
     }
 
     @DeleteMapping("/cancel")
