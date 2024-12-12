@@ -1,19 +1,19 @@
 package restapi.vollmed.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 
 @Configuration
 // @EnableWebSecurity activa la seguridad web en tu aplicación. Sin esta anotación,
@@ -29,24 +29,26 @@ public class SecurityConfiguration {
     // configuramos la aplicacion para que pase de ser Stateful a Stateless.
     // Es una configuración en Spring Security que define cómo se deben manejar las
     // solicitudes HTTP en la aplicación.
-    @Bean // Declara que este método produce un bean que debe ser administrado por el contenedor de Spring.
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(AbstractHttpConfigurer::disable) // Deshabilita CSRF
-            .sessionManagement(session -> session
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Política de sesión sin estado
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+            .csrf(AbstractHttpConfigurer::disable)
+            .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests((authorizeHttpRequests) ->
+                    authorizeHttpRequests
+                            .requestMatchers(
+                                HttpMethod.POST, "/login")
+                            .permitAll()
+                            .requestMatchers(
+                                    "/v3/api-docs/**",
+                                    "/swagger-ui.html",
+                                    "/swagger-ui/**")
+                            .permitAll()
+                            .anyRequest()
+                            .authenticated()
             )
-            .authorizeHttpRequests(authz -> authz
-                    .requestMatchers(HttpMethod.POST, "/login").permitAll() // Permitir acceso a /login
-
-                    // Para permitir que esta solicitud sea ejecutada solo por usuarios con el rol de ADMIN.
-                    // .requestMatchers(HttpMethod.DELETE, "/doctor/delete").hasRole("ADMIN")
-                    // .requestMatchers(HttpMethod.DELETE, "/patient/delete").hasRole("ADMIN")
-
-                    .anyRequest().authenticated() // Cualquier otra solicitud necesita autenticación.
-            )
-                // Para llamar el filtro que nosotros creamos antes del filtro de Spring.
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
-        return http.build();
+            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+            .build();
     }
 
     // El propósito de este método es definir un bean de AuthenticationManager que puede ser

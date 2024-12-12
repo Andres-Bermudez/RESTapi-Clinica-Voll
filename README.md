@@ -194,3 +194,21 @@ por Spring, usando la anotación @Value;
     
 50. Implementar una consulta JPQL (Java Persistence Query Language) compleja en una interfaz repository, 
 utilizando para eso la anotación @Query.
+
+51. Aislar los códigos de validaciones de reglas de negocio en clases separadas, utilizando en ellas la anotación 
+@Component de Spring;
+    
+52. Finalizar la implementación del algoritmo de reserva de consultas;
+    
+53. Utilizar los principios SOLID para dejar el código de la funcionalidad de reserva de consultas más fácil de 
+entender, evolucionar y testar.
+
+54. Agregar la biblioteca SpringDoc en el proyecto para que haga la generación automatizada de la documentación de la API;
+    
+55. Analizar la documentación de SpringDoc para entender cómo realizar su configuración en un proyecto;
+    
+56. Acceder a las direcciones que disponibilizan la documentación de la API en los formatos yaml y html;
+    
+57. Utilizar Swagger UI para visualizar y probar una API Rest;
+    
+58. Configurar el JWT en la documentación generada por SpringDoc.

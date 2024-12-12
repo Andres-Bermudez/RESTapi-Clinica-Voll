@@ -1,18 +1,19 @@
 package restapi.vollmed.security;
 
+import java.io.IOException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import org.springframework.web.filter.OncePerRequestFilter;
+import restapi.vollmed.domain.jwt.TokenService;
 import restapi.vollmed.domain.user.UserRepository;
-import java.io.IOException;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
 // Esta clase es para interceptar las Requests y verificar si llegan
 // con un token valido.
@@ -71,7 +72,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             // Si ocurre cualquier excepción, asegúrate de que el status se ajuste
             // y deja que el manejador global de excepciones lo maneje.
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            // response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Unauthorized: " + ex.getMessage());
         }
     }

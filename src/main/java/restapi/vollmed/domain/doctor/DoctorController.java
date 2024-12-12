@@ -1,5 +1,6 @@
 package restapi.vollmed.domain.doctor;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/doctor")
+@SecurityRequirement(name = "bearer-key") // Para indicar con swagger que este controlador una autenticacion por JWT.
 public class DoctorController {
 
     // Inyeccion de dependencias.

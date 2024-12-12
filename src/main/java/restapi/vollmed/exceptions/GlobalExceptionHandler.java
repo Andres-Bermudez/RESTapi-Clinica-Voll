@@ -1,4 +1,4 @@
-package restapi.vollmed.handlingerrors;
+package restapi.vollmed.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -7,7 +7,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import restapi.vollmed.exceptions.ValidationException;
 import java.util.List;
 
 /*
@@ -20,6 +19,7 @@ import java.util.List;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /*
     // Registrar la excepción para propósitos de depuración
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleAllExceptions(Exception e) {
@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
         // Retornar un 500 Internal Server Error para todas las excepciones no manejadas.
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
     }
+     */
 
     // En el caso de que el cliente realice una solicitud para obtener un
     // registro de la base de datos y este no exista retorna un 404 en lugar de un 500

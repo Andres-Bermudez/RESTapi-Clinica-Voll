@@ -18,17 +18,18 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
     // disponible en una fecha indicada. Utilizando una Native Query porque JPQL no soporta
     // las funciones RAND() y LIMIT.
     @Query(value = """
-       SELECT d.*
-       FROM doctors d
-       WHERE d.active_status = true
-       AND d.specialty = :specialtyDoctor
-       AND d.id NOT IN (
-            SELECT a.id_doctor
-            FROM appointments a
-            WHERE a.date = :date
-       )
-       ORDER BY RAND()
-       LIMIT 1
+            SELECT d.*
+            FROM doctors d
+            WHERE d.active_status = true
+            AND d.specialty = ?
+            AND d.id NOT IN (
+                SELECT a.id_doctor
+                FROM appointments a
+                WHERE a.date = ?
+                AND a.reason_cancellation IS NULL
+            )
+            ORDER BY RAND()
+            LIMIT 1;
        """, nativeQuery = true)
     Optional<DoctorEntity> assignRandomDoctor(String specialtyDoctor, LocalDateTime date);
 }

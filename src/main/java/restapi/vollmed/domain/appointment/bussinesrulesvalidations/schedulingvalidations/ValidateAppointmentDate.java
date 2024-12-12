@@ -1,10 +1,13 @@
-package restapi.vollmed.domain.appointment.bussinesrulesvalidations;
+package restapi.vollmed.domain.appointment.bussinesrulesvalidations.schedulingvalidations;
 
 import org.springframework.stereotype.Component;
-import restapi.vollmed.domain.appointment.AppointmentDTO;
+
 import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.LocalDateTime;
+
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentValidateDTO;
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentsValidator;
 import restapi.vollmed.exceptions.ValidationException;
 
 @Component

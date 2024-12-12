@@ -1,5 +1,6 @@
 package restapi.vollmed.domain.appointment;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @RestController
 @RequestMapping("/appointment")
+@SecurityRequirement(name = "bearer-key") // Para indicar con swagger que este controlador una autenticacion por JWT.
 public class AppointmentController {
 
     @Autowired

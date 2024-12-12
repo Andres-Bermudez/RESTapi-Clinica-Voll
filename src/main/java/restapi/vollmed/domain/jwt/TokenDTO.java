@@ -1,6 +1,6 @@
 package restapi.vollmed.domain.jwt;
 
-public record JWTokenDTO(
+public record TokenDTO(
 
         String token
 ) {

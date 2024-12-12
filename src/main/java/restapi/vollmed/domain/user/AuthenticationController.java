@@ -6,14 +6,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import restapi.vollmed.domain.jwt.JWTokenDTO;
-import restapi.vollmed.security.TokenService;
+import org.springframework.web.bind.annotation.RestController;
+import restapi.vollmed.domain.jwt.TokenDTO;
+import restapi.vollmed.domain.jwt.TokenService;
 
-@Controller
+@RestController
 @RequestMapping("/login") // Endpoint de autenticacion.
 public class AuthenticationController {
 
@@ -29,15 +29,15 @@ public class AuthenticationController {
 
     // Este metodo es un controlador HTTP  que maneja solicitudes de autenticación de usuarios.
     @PostMapping
-    public ResponseEntity<JWTokenDTO> authenticationUser(
+    public ResponseEntity<TokenDTO> authenticationUser(
             @RequestBody @Valid
             // Objeto recibido en el cuerpo de la solicitud.
-            AuthenticationUserDTO authenticationUserDTO
+            UserAuthenticationDTO userAuthenticationDTO
     ) {
         // Datos de autenticacion: Este es un objeto que contiene los datos de autenticación
         // del usuario (nombre de usuario y contraseña).
         Authentication authToken = new UsernamePasswordAuthenticationToken(
-                authenticationUserDTO.userName(), authenticationUserDTO.password()
+                userAuthenticationDTO.userName(), userAuthenticationDTO.password()
         );
 
         // Para disparar el proceso de autenticacion.
@@ -51,6 +51,6 @@ public class AuthenticationController {
         String JWToken = tokenService.generateToken( (UserEntity) authenticateUser.getPrincipal()); // getPrincipal() es para obtener el usuario ya autenticado en el sistema.
 
         // Si la autenticación es exitosa, se devuelve una respuesta HTTP 200 (OK) con el JWT generado.
-        return  ResponseEntity.ok(new JWTokenDTO(JWToken));
+        return  ResponseEntity.ok(new TokenDTO(JWToken));
     }
 }

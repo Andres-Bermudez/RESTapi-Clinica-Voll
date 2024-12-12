@@ -8,6 +8,6 @@ public record CancelledAppointmentDTO(
         Long idAppointment,
 
         @NotNull
-        ReasonsForCancellationAppointment reasonForCancellation
+        ReasonsCancellationAppointment reasonForCancellation
 ) {
 }

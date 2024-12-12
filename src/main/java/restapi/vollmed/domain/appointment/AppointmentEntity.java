@@ -1,8 +1,6 @@
 package restapi.vollmed.domain.appointment;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Future;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -44,10 +42,10 @@ public class AppointmentEntity {
 
     @Column(name = "reason_cancellation")
     @Enumerated(EnumType.STRING)
-    private ReasonsForCancellationAppointment reasonForCancellation;
+    private ReasonsCancellationAppointment reasonForCancellation;
 
     //Metodo para inicializar el atributo reasonForCancellation cuando se cancela una cita.
-    public void cancel(ReasonsForCancellationAppointment reasonsForCancellationAppointment) {
-        this.reasonForCancellation = reasonsForCancellationAppointment;
+    public void cancel(ReasonsCancellationAppointment reasonsCancellationAppointment) {
+        this.reasonForCancellation = reasonsCancellationAppointment;
     }
 }

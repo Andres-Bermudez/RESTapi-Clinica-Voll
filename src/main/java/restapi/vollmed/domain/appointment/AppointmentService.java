@@ -3,6 +3,7 @@ package restapi.vollmed.domain.appointment;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.cancellationvalidations.ValidateCancelledDate;
 import restapi.vollmed.domain.doctor.DoctorEntity;
 import restapi.vollmed.domain.patient.PatientEntity;
 import restapi.vollmed.exceptions.ValidationException;
@@ -29,7 +30,10 @@ public class AppointmentService {
     // Spring reconoce que AppointmentsValidator es una interfaz y busca todas las
     // clases que la implementan y las inyecta en esta lista.
     @Autowired
-    private List<AppointmentsValidator> validators;
+    private List<AppointmentsValidator> schedulingValidators;
+
+    @Autowired
+    private ValidateCancelledDate canceledValidators;
 
     // Metodo para agendar una cita en la base de datos.
     protected AppointmentDetailsDTO scheduleAppointment(AppointmentDTO appointmentDTO) {
@@ -71,7 +75,7 @@ public class AppointmentService {
         // De esta forma ejecutamos cada una de las validaciones que requiere nuestro modelo
         // de negocio y hacemos que el codigo sea mas legible, escalable y mantenible,
         // utilizando principios SOLID.
-        validators.forEach(validator -> validator.validate(appointmentValidateDTO));
+        schedulingValidators.forEach(validator -> validator.validate(appointmentValidateDTO));
 
         // Para almacenar una nueva cita en la base de datos.
         AppointmentEntity appointmentEntity
@@ -116,6 +120,16 @@ public class AppointmentService {
             throw new ValidationException("Query id reported does not exist.");
         }
 
+        // Para verificar si la fecha de cancelacion cumple con la regla de negocio de
+        // cancelarla con 24 horas de anticipacion.
+        AppointmentEntity appointmentCancel = appointmentRepository.getReferenceById(cancelledAppointmentDTO.idAppointment());
+        Boolean canceledDateIsValid = canceledValidators.validateCanceledDate(cancelledAppointmentDTO);
+
+        if (!canceledDateIsValid) {
+            throw new ValidationException("To cancel an appointment you must do so 24 hours in advance of the scheduled time.");
+        }
+
+        // Eliminacion logica.
         // Para inicializar el atributo reasonForCancellation de la entidad AppointmentEntity.
         AppointmentEntity appointment = appointmentRepository.getReferenceById(cancelledAppointmentDTO.idAppointment());
         appointment.cancel(cancelledAppointmentDTO.reasonForCancellation());
