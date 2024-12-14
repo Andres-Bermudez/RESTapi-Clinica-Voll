@@ -1,10 +1,10 @@
 package restapi.vollmed.domain.user;
 
+import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
 
 // La interfaz UserDetailsService en Spring Security es una parte central del sistema
 // de autenticación. Su propósito principal es proporcionar una forma de recuperar los

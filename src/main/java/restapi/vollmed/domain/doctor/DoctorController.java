@@ -1,17 +1,16 @@
 package restapi.vollmed.domain.doctor;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.net.URI;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
+import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/doctor")
@@ -55,8 +54,7 @@ public class DoctorController {
     public ResponseEntity<DoctorReadDTO> doctorRegistration(
             @RequestBody // Este objeto llega por medio del cuerpo de la solicitud.
             @Valid // Activar la validacion con spring de este objeto.
-            DoctorCreateDTO doctorCreateDTO,
-            UriComponentsBuilder uriComponentsBuilder
+            DoctorCreateDTO doctorCreateDTO, UriComponentsBuilder uriComponentsBuilder
     ) {
         DoctorEntity doctorEntity = doctorService.saveDoctor(doctorCreateDTO);
 

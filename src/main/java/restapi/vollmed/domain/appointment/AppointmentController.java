@@ -1,15 +1,15 @@
 package restapi.vollmed.domain.appointment;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/appointment")
-@SecurityRequirement(name = "bearer-key") // Para indicar con swagger que este controlador una autenticacion por JWT.
+@SecurityRequirement(name = "bearer-key") // Para indicar con swagger que este controlador requiere autenticacion con JWT.
 public class AppointmentController {
 
     @Autowired
@@ -30,7 +30,7 @@ public class AppointmentController {
 
     @DeleteMapping("/cancel")
     @Transactional
-    public ResponseEntity<CancelledAppointmentDTO> cancelledAppointment(
+    public ResponseEntity cancelledAppointment(
 
             @RequestBody
             @Valid

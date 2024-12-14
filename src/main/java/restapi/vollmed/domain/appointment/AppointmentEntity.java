@@ -1,13 +1,13 @@
 package restapi.vollmed.domain.appointment;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import restapi.vollmed.domain.doctor.DoctorEntity;
 import restapi.vollmed.domain.patient.PatientEntity;
-import java.time.LocalDateTime;
 
 @Entity()
 @Table(name = "appointments")

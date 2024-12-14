@@ -1,12 +1,11 @@
 package restapi.vollmed.domain.doctor;
 
+import java.time.LocalDateTime;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import java.time.LocalDateTime;
-import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
@@ -31,5 +30,5 @@ public interface DoctorRepository extends JpaRepository<DoctorEntity, Long> {
             ORDER BY RAND()
             LIMIT 1;
        """, nativeQuery = true)
-    Optional<DoctorEntity> assignRandomDoctor(String specialtyDoctor, LocalDateTime date);
+    DoctorEntity assignRandomDoctor(String specialtyDoctor, LocalDateTime date);
 }

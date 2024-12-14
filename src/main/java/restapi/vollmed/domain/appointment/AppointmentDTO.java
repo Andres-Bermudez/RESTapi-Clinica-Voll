@@ -1,9 +1,9 @@
 package restapi.vollmed.domain.appointment;
 
+import java.time.LocalDateTime;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import restapi.vollmed.domain.doctor.SpecialtyDoctor;
-import java.time.LocalDateTime;
 
 public record AppointmentDTO(
 

@@ -1,14 +1,13 @@
 package restapi.vollmed.exceptions;
 
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import java.util.List;
-
 /*
  * MANEJADOR GLOBAL DE EXCEPCIONES.
  *

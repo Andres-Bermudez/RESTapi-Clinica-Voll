@@ -1,17 +1,16 @@
 package restapi.vollmed.domain.patient;
 
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import java.net.URI;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.net.URI;
+import org.springframework.beans.factory.annotation.Autowired;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @RestController
 @RequestMapping("/patient")

@@ -1,9 +1,9 @@
 package restapi.vollmed.domain.doctor;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import restapi.vollmed.domain.address.AddressDTO;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record DoctorUpdateDTO(
 

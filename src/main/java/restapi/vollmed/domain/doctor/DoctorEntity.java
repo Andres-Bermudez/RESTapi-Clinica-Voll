@@ -1,10 +1,10 @@
 package restapi.vollmed.domain.doctor;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import restapi.vollmed.domain.address.AddressEntity;
 
 @Table(name = "doctors")

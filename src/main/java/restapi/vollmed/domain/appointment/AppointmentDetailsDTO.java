@@ -1,7 +1,7 @@
 package restapi.vollmed.domain.appointment;
 
-import jakarta.validation.Valid;
 import java.time.LocalDateTime;
+import jakarta.validation.Valid;
 
 public record AppointmentDetailsDTO(
 

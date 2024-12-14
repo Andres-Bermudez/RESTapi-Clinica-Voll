@@ -1,15 +1,15 @@
 package restapi.vollmed.domain.jwt;
 
 import com.auth0.jwt.JWT;
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.LocalDateTime;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
 import restapi.vollmed.domain.user.UserEntity;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.jwt.exceptions.JWTVerificationException;
 
 @Service
 public class TokenService {

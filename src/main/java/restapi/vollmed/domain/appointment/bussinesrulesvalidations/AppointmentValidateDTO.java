@@ -1,7 +1,7 @@
 package restapi.vollmed.domain.appointment.bussinesrulesvalidations;
 
-import restapi.vollmed.domain.doctor.SpecialtyDoctor;
 import java.time.LocalDateTime;
+import restapi.vollmed.domain.doctor.SpecialtyDoctor;
 
 public record AppointmentValidateDTO(
 

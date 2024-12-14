@@ -3,7 +3,6 @@ package restapi.vollmed.domain.appointment;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Service;
-import restapi.vollmed.domain.appointment.bussinesrulesvalidations.cancellationvalidations.ValidateCancelledDate;
 import restapi.vollmed.domain.doctor.DoctorEntity;
 import restapi.vollmed.domain.patient.PatientEntity;
 import restapi.vollmed.exceptions.ValidationException;
@@ -12,6 +11,8 @@ import restapi.vollmed.domain.patient.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentsValidator;
 import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentValidateDTO;
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.cancellationvalidations.ValidateCancelledAppointment;
+
 
 @Service
 public class AppointmentService {
@@ -33,7 +34,7 @@ public class AppointmentService {
     private List<AppointmentsValidator> schedulingValidators;
 
     @Autowired
-    private ValidateCancelledDate canceledValidators;
+    private ValidateCancelledAppointment canceledValidators;
 
     // Metodo para agendar una cita en la base de datos.
     protected AppointmentDetailsDTO scheduleAppointment(AppointmentDTO appointmentDTO) {
@@ -54,9 +55,9 @@ public class AppointmentService {
         }
 
         // Para obtener la entidad del medico y el paciente de la base de datos.
-        Optional<DoctorEntity> doctorAssign = assignDoctor(appointmentDTO); // Para asignar un medico a la cita.
+        DoctorEntity doctorAssign = assignDoctor(appointmentDTO); // Para asignar un medico a la cita.
         // Para lanzar una excepcion en caso de que no se encuentre un medico disponible.
-        if (doctorAssign.isEmpty()) {
+        if (doctorAssign == null) {
             throw new ValidationException("There is no doctor available at that date.");
         }
 
@@ -68,8 +69,8 @@ public class AppointmentService {
         // Este es el objeto que es verificado por los validadores, porque este contiene
         // todos los datos de la cita ya asignados.
         AppointmentValidateDTO appointmentValidateDTO =
-                new AppointmentValidateDTO(doctorAssign.get().getId(), patientEntity.get().getId(),
-                        appointmentDTO.date(), doctorAssign.get().getSpecialtyDoctor());
+                new AppointmentValidateDTO(doctorAssign.getId(), patientEntity.get().getId(),
+                        appointmentDTO.date(), doctorAssign.getSpecialtyDoctor());
 
         // Validaciones de las reglas de negocio.
         // De esta forma ejecutamos cada una de las validaciones que requiere nuestro modelo
@@ -79,7 +80,7 @@ public class AppointmentService {
 
         // Para almacenar una nueva cita en la base de datos.
         AppointmentEntity appointmentEntity
-                = new AppointmentEntity(null, doctorAssign.get(), patientEntity.get(), appointmentDTO.date(), null);
+                = new AppointmentEntity(null, doctorAssign, patientEntity.get(), appointmentDTO.date(), null);
         appointmentRepository.save(appointmentEntity);
 
         return new AppointmentDetailsDTO(appointmentEntity);
@@ -87,13 +88,13 @@ public class AppointmentService {
 
     // Metodo para verificar si en la solicitud fue enviado un medico para agendar la cita.
     // En caso de que este dato llegue Null sera asignado un medico disponible automaticamente.
-    private Optional<DoctorEntity> assignDoctor(AppointmentDTO appointmentDTO) {
+    private DoctorEntity assignDoctor(AppointmentDTO appointmentDTO) {
 
         // Este bloque de codigo se ejecuta cuando en la solicitud si es enviado el id de un medico.
         if (appointmentDTO.idDoctor() != null) {
             // getReferenceById(): Este metodo retorna el objeto/entidad original de la base
             // de datos, en cambio el metodo findById() retorna un Optional.
-            return doctorRepository.findById(appointmentDTO.idDoctor());
+            return doctorRepository.getReferenceById(appointmentDTO.idDoctor());
         }
 
         // Este bloque de codigo es para lanzar una excepcion en caso de que no se haya enviado en
@@ -115,18 +116,12 @@ public class AppointmentService {
     // Este metodo es para cancelar una cita.
     protected void cancelledAppointment(CancelledAppointmentDTO cancelledAppointmentDTO) {
 
-        // Para verificar si la cita que se quiere cancelar existe en la base de datos.
-        if (!appointmentRepository.existsById(cancelledAppointmentDTO.idAppointment())) {
-            throw new ValidationException("Query id reported does not exist.");
-        }
+        // Para verificar si la cita es valida para cancelacion.
+        Boolean canceledAppointmentIsValid = canceledValidators.validateCanceledAppointment(cancelledAppointmentDTO);
 
-        // Para verificar si la fecha de cancelacion cumple con la regla de negocio de
-        // cancelarla con 24 horas de anticipacion.
-        AppointmentEntity appointmentCancel = appointmentRepository.getReferenceById(cancelledAppointmentDTO.idAppointment());
-        Boolean canceledDateIsValid = canceledValidators.validateCanceledDate(cancelledAppointmentDTO);
-
-        if (!canceledDateIsValid) {
-            throw new ValidationException("To cancel an appointment you must do so 24 hours in advance of the scheduled time.");
+        if (!canceledAppointmentIsValid) {
+            throw new ValidationException("The appointment you are trying to cancel is no longer available " +
+                    "or does not meet the 24 hour notice cancellation window.");
         }
 
         // Eliminacion logica.

@@ -1,13 +1,12 @@
 package restapi.vollmed.domain.appointment.bussinesrulesvalidations.schedulingvalidations;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentValidateDTO;
-import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentsValidator;
 import restapi.vollmed.domain.doctor.DoctorEntity;
 import restapi.vollmed.domain.doctor.DoctorRepository;
 import restapi.vollmed.exceptions.ValidationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentsValidator;
+import restapi.vollmed.domain.appointment.bussinesrulesvalidations.AppointmentValidateDTO;
 
 @Component
 public class ValidateActiveDoctorStatus implements AppointmentsValidator {

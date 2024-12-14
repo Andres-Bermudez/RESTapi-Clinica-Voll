@@ -212,3 +212,15 @@ entender, evolucionar y testar.
 57. Utilizar Swagger UI para visualizar y probar una API Rest;
     
 58. Configurar el JWT en la documentación generada por SpringDoc.
+
+59. Escribir tests automatizados en una aplicación con Spring Boot;
+    
+60. Escribir tests automatizados de una interfaz Repository, siguiendo la estrategia de usar la misma base de datos que
+la aplicación utiliza;
+    
+61. Sobrescribir propiedades del archivo application.properties, creando otro archivo llamado application-test.properties
+que sea cargado solo al ejecutar los tests, utilizando para ello la anotación @ActiveProfiles;
+    
+62. Escribir tests automatizados de una clase Controller, utilizando la clase MockMvc para simular requests en la API;
+    
+63. Testar escenarios de error 400 y código 200 en el test de una clase Controller.

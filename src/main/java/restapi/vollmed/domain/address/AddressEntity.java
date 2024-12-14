@@ -1,9 +1,9 @@
 package restapi.vollmed.domain.address;
 
-import jakarta.persistence.Embeddable;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import jakarta.persistence.Embeddable;
 
 @Embeddable
 @Getter
