@@ -80,7 +80,7 @@ class DoctorRepositoryTest {
 
         // Registro en la base de datos para poder ejecutar el test.
         DoctorEntity doctorRegistered = registerDoctor(
-                "Doctor1",
+                "doctor1",
                 "doctor1@email.com",
                 SpecialtyDoctor.CARDIOLOGY);
 

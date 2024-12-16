@@ -121,7 +121,21 @@
 					</excludes>
 				</configuration>
 			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.4.2</version>
+
+				<configuration>
+					<excludes>
+						<!-- Para excluir estos perfiles en el empaquetamiento del JAR -->
+						<exclude>application-dev.properties</exclude>
+						<exclude>application-test.properties</exclude>
+					</excludes>
+
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-
 </project>

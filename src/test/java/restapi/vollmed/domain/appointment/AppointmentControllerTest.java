@@ -10,6 +10,7 @@ import static org.mockito.ArgumentMatchers.any;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import restapi.vollmed.domain.doctor.SpecialtyDoctor;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.boot.test.json.JacksonTester;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,14 +19,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 
 // TEST UNITARIO DEL AppointmentController.
 
-@SpringBootTest // Para subir el contexto necesario para el controlador para poder ejecutar los tests.
+/*
+ * ERROR: ESTE ES UN TEST DE INTEGRACION PARCIAL, PORQUE SPRING LEVANTA TODO EL CONTEXTO DE LA
+ * APLICACION INCLUYENDO LA CAPA DE PERSISTENCIA CUANDO SE UTILIZA LA ANOTACION @SpringBootTest.
+ * ES DECIR QUE "NO ES UN TEST UNITARIO", PORQUE NO PRUEBA SOLO EL CONTROLADOR DE FORMA AISLADA.
+ *
+ * POR ESO CUANDO QUIZE CREAR UN PERFIL PARA PRODUCCION DIFERENTE DEL ARCHIVO application-test.properties
+ * ME DABA ERROR EN LOS TESTS Y TUVE QUE AGREGARLE LA ANOTACION @ActiveProfiles Y SELECCIONAR EL PERFIL DE "test"
+ * PARA PODER HACER LA GENERACION DEL JAR.
+*/
+
+@SpringBootTest// Para subir el contexto necesario para el controlador para poder ejecutar los tests.
 @AutoConfigureMockMvc // Para poder usar Mocks para hacer simulaciones del controlador.
-@AutoConfigureJsonTesters // // Para crear JSONs con Spring a partir de Objetos Java.
+@AutoConfigureJsonTesters// // Para crear JSONs con Spring a partir de Objetos Java.
+@ActiveProfiles("test")
 class AppointmentControllerTest {
 
     @Autowired
@@ -52,9 +64,10 @@ class AppointmentControllerTest {
             " envian datos en el cuerpo de la solicitud.")
     @WithMockUser // Para simular que ya estamos autenticados y autorizados en la aplicacion.
     void scheduleAppointmentNotDataBodyTest() throws Exception {
-        // Para simular una solicitud  de tipo POST al endpoint /schedule.
+        // Para simular una solicitud  de tipo POST al endpoint /schedule sin cuerpo.
         HttpServletResponse response = mockMvc.perform(post("/appointment/schedule"))
-                .andReturn().getResponse();
+                .andReturn()
+                .getResponse();
 
         // Para verificar que el status de la respuesta recibida sea un 400 bad request.
         assertThat(response.getStatus()).isEqualTo(HttpStatus.BAD_REQUEST.value());

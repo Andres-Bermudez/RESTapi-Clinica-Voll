@@ -5,6 +5,7 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import restapi.vollmed.domain.jwt.TokenService;
 import restapi.vollmed.domain.user.UserRepository;
@@ -46,6 +47,13 @@ public class SecurityFilter extends OncePerRequestFilter {
             if (tokenHeader != null) {
                 // Si no viene vacio lo formateamos.
                 tokenHeader = tokenHeader.replace("Bearer ", "");
+
+                // Para verificar si el token es valido.
+                if (!tokenService.validateToken(tokenHeader)) {
+                    response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                    response.getWriter().write("Unauthorized: Invalid token.");
+                    return; // No continua con el filtro.
+                }
 
                 // Para obetener el sujeto de la solicitud.
                 String subject = tokenService.getSubject(tokenHeader);

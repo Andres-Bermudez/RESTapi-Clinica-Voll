@@ -1,11 +1,31 @@
 # REST API Clinica Voll
 
+# Indice
+- [Documentacion de la API.](#documentacion-de-la-api)
+- [Descripcion.](#descripcion)
+- [Desafios del proyecto.](#desafios-que-se-presentaron-en-la-creacion-del-proyecto)
+- [Stack tecnologico.](#stack-tecnologico)
+- [Seguimiento del proyecto.](#seguimiento-del-proyecto)
+
+### Documentacion de la API:
+Link: 
+
+### Descripcion:
+Este proyecto es una API REST diseñada para una clínica que permite la gestión
+de médicos, pacientes y consultas, creada como proyecto final de uno de los cursos de
+la especializacion en backend con Java y Spring framework de ONE - Oracle Next Education. 
+
+Fue desarrollada en Java con Spring Boot, base de datos en MySQL y Maven 
+como gestor de dependencias.
+
+La API cuenta con funciones de seguridad como autenticacion y autorizacion de
+usuarios usando JSON Web Tokens de la libreria Auth0.
+
 - Proceso de autenticacion en la API:
   ![authentication.png](images/authentication.png)
   <br><br>
 
-- Funcionamiento de los filtros para interceptar las solicitudes
-  y verificar si llegan con un token valido:
+- Funcionamiento de los filtros para interceptar las solicitudes:
   ![servletSpring.png](images/servletSpring.png)
   <br><br>
 
@@ -13,36 +33,59 @@
   ![autorization.png](images/autorization.png)
   <br><br>
 
-- Creacion de una entidad por medio del endpoint correspondiente:
-![CreateDoctor.png](images/CreateDoctor.png)
-  <br><br>
+Tambien cuenta con multiples validaciones para las reglas de negocio, como verificacion de fechas,
+validez de los tokens y de los datos enviados por el usuario, esto para asegurar que
+no se permitan datos incorrectos, incompletos o invalidos.
 
-- Registros en la base de datos:
-![DataBase.png](images/DataBase.png)
+![BussinesRules1.png](images/BussinesRules1.png)
 
-### Descripcion:
-Esta API está diseñada para una clínica y permite la gestión
-integral de médicos, pacientes y consultas, ofreciendo todas las operaciones 
-comunes para la persistencia de datos con autenticacion y autorizacion de usuarios
-utilizando los modulos que nos proporciona Spring framework para gestionar estas tareas.
+![BussinesRules1.png](images/BussinesRules2.png)
 
-En la creacion del proyecto se hace enfasis en las buenas practicas para
-la creacion de APIs REST para garantizar la seguridad, escalabilidad y facil mantenimiento.
+![BussinesRules3.png](images/BussinesRules3.png)
 
-La aplicación permite realizar todas las operaciones CRUD (Crear, Leer, 
-Actualizar, Eliminar) necesarias para la gestión de la información en la clínica. 
-Esto incluye:
+Para generar la documentacion de la API utilice SpringDoc - OpenApi y asi generarla
+de forma automatica para evitar errores, ademas que esta libreria nos brinda tambien
+la generacion de un bonito frontend para su presentacion.
 
-Gestión de Médicos: Permite agregar, actualizar, listar y eliminar registros de médicos.
-<br><br>
-Gestión de Pacientes: Facilita la administración de los datos de los pacientes ejecutando 
-las mismas operaciones disponibles con los medicos.
-<br><br>
+![Documentation.png](images/Documentation.png)
 
-- Realizando una solitud GET para obtener los medicos registrados:
-![ListDoctor.png](images/ListDoctor.png)
+En la creacion del proyecto se hizo enfasis en las buenas practicas para la 
+creacion de APIs REST, como la arquitectura orientada al dominio, implementacion 
+de patrones de diseno, creacion de migraciones para la base de datos con flyway y uso 
+de frameworks y librerias para generar codigo repetitivo(Lombok), entre otros, 
+para garantizar la seguridad, escalabilidad y facil mantenimiento.
 
-Los detalles del stack tecnológico son los siguientes:
+Este proyecto es una muestra de todo el ciclo de desarrollo de software, desde entender
+los requerimientos hasta que la aplicacion es llevada a produccion.
+
+### Desafios que se presentaron en la creacion del proyecto:
+Durante la creacion de este proyecto enfrente desafios como la ejecucion de
+los test "unitarios", porque, en el curso se aseguraba que todos los tests que
+estabamos realizando eran tests "unitarios", pero cuando quize preparar mi aplicacion
+para enviar a produccion, me encontre con varios errores al momento de generar
+el archivo JAR porque queria hacerlo, sin empaquetar los perfiles application-dev.properties y
+application-test.properties y crear un perfil diferente para produccion,
+donde se siguieran las buenas practicas para estar seguro de hacer un deploy seguro y eficiente,
+pero como los tests se ejecutaban en un ambiente de pruebas, y Maven ejecuta
+la aplicacion y los tests para verificar el funcionamiento antes de generar el JAR, me daba 
+varios errores utilizando el perfil de produccion.
+
+Despues de varias horas leyendo documentacion e investigando en internet me di cuenta
+que un par de los tests que estabamos haciendo no eran propiamente tests "unitarios",
+sino que eran tests de "integracion" parcial y por ello me daba error cuando Maven
+ejecutaba los tests con las credenciales de la base de datos del perfil de produccion que las obtenia
+a partir de variables de entorno.
+
+Esto logre solucionarlo leyendo documentacion, buscando en foros, preguntale a una
+IA y ejecutando pruebas manuales.
+
+Tambien, tuve algunos problemas con la generacion de consultas a la 
+base de datos utilizando JPQL para no escribir consultas SQL nativas,
+que logre solucionar con exito accediento a la documentacion oficial y con ayuda
+de una IA para detectar los errores mas rapido y ahorrar tiempo.
+
+### Stack tecnologico:
+Los detalles del stack tecnológico que utilice son los siguientes:
 
 Lenguaje de Programación: Java
 <br>
@@ -60,26 +103,22 @@ Spring Validation: Para validar los datos de entrada de forma sencilla.
 <br><br>
 Spring Starter Web: Permite la ejecución de aplicaciones web.
 <br><br>
-Spring Security: Para gestionar la autenticacion y autorizacion de usuarios 
+Spring Security: Para gestionar la autenticacion y autorizacion de usuarios
 que realizan solicitudes a la API.
 <br><br>
-Devtools: Facilita el desarrollo en tiempo real, mostrando los cambios sin 
+Devtools: Facilita el desarrollo en tiempo real, mostrando los cambios sin
 necesidad de reiniciar el servidor.
 <br><br>
-Lombok: Simplifica la generación de código repetitivo como constructores, 
+Lombok: Simplifica la generación de código repetitivo como constructores,
 getters y setters.
 <br><br>
 Flyway: Para realizar migraciones de bases de datos.
 
-Este proyecto demuestra la integración de múltiples componentes de Spring 
-Framework para desarrollar una API REST robusta, eficiente y segura, proporcionando 
+Este proyecto demuestra la integración de múltiples componentes de Spring
+Framework para desarrollar una API REST robusta, eficiente y segura, proporcionando
 una solución completa para la gestión de una clínica médica.
-<br><br>
-- Estructura del proyecto:
 
-![ProjectStructure.png](images/ProjectStructure.png)
-
-### Seguimiento de lo realizado:
+### Seguimiento del proyecto:
 1. Crear un proyecto Spring Boot usando el sitio web Spring Initializr;
 
 2. Importar el proyecto a IntelliJ y ejecutar una aplicación Spring Boot 
@@ -224,3 +263,13 @@ que sea cargado solo al ejecutar los tests, utilizando para ello la anotación @
 62. Escribir tests automatizados de una clase Controller, utilizando la clase MockMvc para simular requests en la API;
     
 63. Testar escenarios de error 400 y código 200 en el test de una clase Controller.
+
+64. Utilizar archivos de propiedades específicos para cada profile, modificando en cada archivo las propiedades que 
+necesitan ser modificadas.
+    
+65. Configurar informaciones sensibles de la aplicación, como datos de acceso a la base de datos, a través de variables 
+de ambiente;
+    
+66. Realizar el build del proyecto a través de Maven.
+    
+67. Ejecutar la aplicación vía terminal, con el comando java -jar, pasando las variables de ambiente como parámetro.

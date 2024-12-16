@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import static org.mockito.ArgumentMatchers.any;
 import restapi.vollmed.domain.address.AddressDTO;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.boot.test.json.JacksonTester;
 import static org.assertj.core.api.Assertions.assertThat;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -18,9 +19,22 @@ import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
+// TEST UNITARIO DEL DoctorController.
+
+/*
+ * ERROR: ESTE ES UN TEST DE INTEGRACION PARCIAL, PORQUE SPRING LEVANTA TODO EL CONTEXTO DE LA
+ * APLICACION INCLUYENDO LA CAPA DE PERSISTENCIA CUANDO SE UTILIZA LA ANOTACION @SpringBootTest.
+ * ES DECIR QUE "NO ES UN TEST UNITARIO", PORQUE NO PRUEBA SOLO EL CONTROLADOR DE FORMA AISLADA.
+ *
+ * POR ESO CUANDO QUIZE CREAR UN PERFIL PARA PRODUCCION DIFERENTE DEL ARCHIVO application-test.properties
+ * ME DABA ERROR EN LOS TESTS Y TUVE QUE AGREGARLE LA ANOTACION @ActiveProfiles Y SELECCIONAR EL PERFIL DE "test"
+ * PARA PODER HACER LA GENERACION DEL JAR.
+ */
+
 @SpringBootTest // Para que Spring cargue todo el contexto necesario para testear controladores.
 @AutoConfigureMockMvc // Para poder usar Mocks para hacer simulaciones del controlador.
 @AutoConfigureJsonTesters // Para crear JSONs con Spring a partir de Objetos Java.
+@ActiveProfiles("test")
 class DoctorControllerTest {
 
     @Autowired
@@ -60,16 +74,16 @@ class DoctorControllerTest {
         // Para que cuando quiera acceder al servicio me retorne siempre un JSON preestablecido sin
         // importar el contenido que se le envie.Esto lo hacemos con la libreria Mockito.
         //
-        // Cuando doctorRepository acceda al metodo save() sin importar el contenido
+        // Cuando doctorService acceda al metodo saveDoctor() sin importar el contenido
         // que se le envie, siempre va a retornar el objeto doctorEntity.
-        when(doctorRepository.save(any())).thenReturn(doctorEntity);
+        when(doctorService.saveDoctor(any())).thenReturn(doctorEntity);
 
         // Para que cuando quiera acceder al servicio me retorne siempre un JSON preestablecido sin
         // importar el contenido que se le envie.Esto lo hacemos con la libreria Mockito.
         //
-        // Cuando doctorService acceda al metodo saveDoctor() sin importar el contenido
+        // Cuando doctorRepository acceda al metodo save() sin importar el contenido
         // que se le envie, siempre va a retornar el objeto doctorEntity.
-        when(doctorService.saveDoctor(any())).thenReturn(doctorEntity);
+        when(doctorRepository.save(any())).thenReturn(doctorEntity);
 
         // Objeto que se espera recibir en el cuerpo de la respuesta.
         DoctorReadDTO doctorReadDTO = new DoctorReadDTO(doctorEntity);

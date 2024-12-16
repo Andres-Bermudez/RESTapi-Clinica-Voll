@@ -4,6 +4,8 @@ import com.auth0.jwt.JWT;
 import java.time.Instant;
 import java.time.ZoneOffset;
 import java.time.LocalDateTime;
+
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.stereotype.Service;
@@ -95,5 +97,22 @@ public class TokenService {
 
         // Retorna el subject de la solicitud.
         return verifier.getSubject();
+    }
+
+    // Método para validar el token.
+    public boolean validateToken(String token) {
+        try {
+            // Crea el algoritmo HMAC con SHA-256
+            Algorithm algorithm = Algorithm.HMAC256(apiSecret);
+
+            // Crea un verificador y verifica el token
+            JWTVerifier verifier = JWT.require(algorithm).build();
+            verifier.verify(token);  // Si el token es válido, no lanzará ninguna excepción.
+
+            return true;  // El token es válido
+        } catch (JWTVerificationException e) {
+            // Si el token es inválido. (por ejemplo, firma incorrecta o expirado)
+            return false;
+        }
     }
 }
